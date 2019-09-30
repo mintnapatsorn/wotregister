@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>RELAY SERVER MANAGEMENT</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <!-- Navbar Bootstrap-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <!-- Styles -->
+        <style>
+          #example2 {
+              background-repeat: no-repeat;
+              /*background-size: 300px 100px;*/
+              /*background-size: auto;*/
+              /*background-size: contain,cover;*/ /*คือการกำหนดแบลคกาวน์ตามขนาดภาพดั้งเดิม*/
+              background-size:cover; /*คือการปรับภาพแบลคกราวด์ให้สมดุลกับขนาดของหน้าเว็บจริง*/
+            }
+        </style>
+    </head>
+    <body background="5.jpg" id="example2">
+        <!-- <nav> -->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="/"><img src="2.png" width="48" height="35"></a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li><a href="{{ url('/adminmanagement') }}">Back to home</a></li>
+                <li><a href="{{ url('/admincheckuserrequestpermission') }}">Permission request</a></li>
+                <li><a href="{{ url('/domainmanagement') }}">Domain config</a></li>
+                <li><a href="{{ url('/relayservermanagement') }}">Relay server management</a></li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-log-in"><?php echo session('preferred_username'); ?></span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @foreach(Session::get('groups') as $groups)
+                                @if($groups ==env('NAME_SPACE'))
+                                    <li><a href="{{ url('/') }}">Domain register</a></li>
+                                @endif
+                            @endforeach
+                          <li><a href="{{ url('/logout') }} ">Logout</a></li>
+                        </ul>
+                  </li>
+              </ul>
+
+              <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url('/logout') }} "><span class="glyphicon glyphicon-log-in"></span> </a></li>
+              </ul> -->
+            </div>
+          </nav>
+            <div class="content">
+                    <font size="6"><p style="color:black" align="center">RELAY SERVER MANAGEMENT</p></font>
+                    <p align="center"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">ADD NEW RELAY SERVER</button></p>
+                    <table align="center" width="50%">
+                        <tr>
+                            <th><font size="2px">ID</font></th>
+                            <th><font size="2px">RELAY SERVER CODE</font></th>
+                            <th><font size="2px">DESCRIPTION</font></th>
+                            <th><font size="2px">ACTION</font></th>
+                        </tr>
+                        @foreach($serverlist as $serverlist)
+                            <tr>
+                                <td><font size="2px">{{ $serverlist['id'] }}</font></td>
+                                <td><font size="2px">{{ $serverlist['relayserver_code'] }} </font></td>    
+                                <td><font size="2px">{{ $serverlist['description'] }}</font></td>
+                                <td>
+                                  <!-- <a href="{{ route('edit',$serverlist['server_id']) }}"><button class="button" type="submit" value="edit" value="edit">EDIT</button></a> -->
+                                  <a href="{{ route('delete',$serverlist['id']) }}"><button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure to delete this record ?')"><font size="2px">DELETE</font></button></a>
+
+                                  <!-- Button for test bootstrap for edit -->
+                                  <!-- <button class="btn btn-warning" data-mytitle="{{$serverlist->country_serverlist}}" data-mydescription="{{$serverlist->country_code}}" data-serverid="{{$serverlist['server_id']}}" data-toggle="modal" data-target="#edit"><font size="2px">Edit</font></button> -->
+
+                                  <!-- Nomal edit button with next form -->
+                                  <a href="{{ route('edit',$serverlist['id']) }}"><button class="btn btn-warning" type="submit" value="edit" value="edit"><font size="2px">EDIT</font></button></a> 
+
+                                  <!-- <button class="btn btn-warning" data-toogle="modal" data-target="#edit">Edit</button> -->
+
+                                </td>
+                            </tr>
+                        @endforeach 
+                    </table>
+                <div class="links">
+                </div>
+             </div>
+        </div>
+
+        <!-- Modal Bootstrap for add new relayserver data -->
+        <div class="container">
+          <!-- Trigger the modal with a button -->
+          <br></br>
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">ADD NEW RELAY SERVER : </h4>
+                </div>
+                <form action="add" method="post">
+                    {{csrf_field()}} 
+                  <div class="modal-body">
+                    <!-- <p>Some text in the modal.</p> -->
+                      <label>Relay server code : <input type="text" id="relayservercode" name="relayservercode" placeholder="Enter Relay Server Name" /></label><br></br>
+                      <label>Description : <input type="text" id="relayservername" name="relayservername" placeholder="Enter Relay Server Code" /></label>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure to add new relay server data ? ')">SEND</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">CANCEL</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>   
+        </div>
+
+          <div class="container">
+          <!-- Modal Bootstrap for edit relayserver data  -->
+          <div class="modal fade" id="edit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                  <h4 class="modal-title" id="myModalLabel">EDIT RELAYSERVER DATA</h4>
+                </div>
+                <form action="{{ route('/updatedata',$serverlist['id']) }}" method="post">
+                    {{csrf_field()}}
+                  <div class="modal-body">
+                      <label>ID : <input type="text" name="relayserverid" value="{{$serverlist['id']}}"></label><br></br>
+                      <label>Relay server code : <input type="text" name="relayservername" value="{{$serverlist->relayserver_code}}"></label><br></br>
+                      <label>Description : <input type="text" name="relayservercode" value="{{$serverlist->description}}"></label><br></br>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-success" onclick="return confirm(' Are you sure to update this record ? ')">UPDATE CHANGE</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">CLOSE</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          </div>
+
+
+        <!-- Script for load data -->
+        <script>
+          $(document).ready(function(){
+            $('.ourItem').each(function(){
+                $(this).click(function(event){
+                    var text = $(this).text();
+                    console.log(text);
+                });
+            });
+          });
+        </script>
+
+
+
+         <!-- Alert for condition-->
+        <link href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet">
+            <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+            <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+
+            <script>
+                @if(Session::has('message'))
+                    var type="{{Session::get('alert-type','info','positionClass')}}"
+                    switch(type){
+                        case 'info':
+                            toastr.info("{{ Session::get('message') }}");
+                            break;
+                        case 'success':
+                            toastr.success("{{ Session::get('message') }}");
+                            break;
+                        case 'warning':
+                            toastr.warning("{{ Session::get('message') }}");
+                            break;
+                        case 'error':
+                            toastr.error("{{ Session::get('message') }}");
+                            toastr.option.positionClass('toast-bottom-full-width');
+                            break;
+                    }
+                @endif
+            </script>
+    </body>
+</html>

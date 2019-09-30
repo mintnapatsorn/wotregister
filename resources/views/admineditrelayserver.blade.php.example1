@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>DOMAIN MANAGEMENT</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <!-- Navbar Bootstrap-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <!-- Styles -->
+        <style>
+            #example2 {
+              background-repeat: no-repeat;
+              /*background-size: 300px 100px;*/
+              /*background-size: auto;*/
+              /*background-size: contain,cover;*/ /*คือการกำหนดแบลคกาวน์ตามขนาดภาพดั้งเดิม*/
+              background-size:cover; /*คือการปรับภาพแบลคกราวด์ให้สมดุลกับขนาดของหน้าเว็บจริง*/
+            }
+        </style>
+    </head>
+    <body background="10.jpg" id="example2">
+        <!-- <nav> -->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="/"><img src="2.png" width="48" height="35"></a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li><a href="{{ url('/admincheckuserrequestpermission') }}">Quota request</a></li>
+                <li><a href="{{ url('/domainmanagement') }}">Domain config</a></li>
+                <li><a href="{{ url('/relayservermanagement') }}">Relayserver management</a></li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-log-in"><?php echo session('preferred_username'); ?></span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @foreach(Session::get('groups') as $groups)
+                                @if($groups ==env('NAME_SPACE'))
+                                    <li><a href="{{ url('/') }}">Domain register</a></li>
+                                @endif
+                            @endforeach
+                          <li><a href="{{ url('/logout') }} ">Logout</a></li>
+                        </ul>
+                  </li>
+              </ul>
+
+              <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url('/logout') }} "><span class="glyphicon glyphicon-log-in"></span> </a></li>
+              </ul> -->
+            </div>
+          </nav>
+            <div class="content" align="center">
+                    <p align="center">
+                        @foreach($data as $data)
+                            <font size="6">RELAY SERVER EDIT DATA</p></font>
+                            <label for="domaintext" >ID : </label>
+                            <input type="text" name="relayserverid" value="{{ $data['id']}}" readonly><br></br>
+                            <label for="domaintext" >Relay server code : </label>
+                            <input type="text" name="relayservername" value="{{ $data['relayserver_code']}}"><br></br>
+                            <label for="domaintext" >Description : </label>
+                            <input type="text" name="relayservercode" value="{{ $data['description'] }}"><br></br>
+
+                            <form action="/updatedata" method="post">                
+                                {{csrf_field()}}
+                                <button class="btn btn-success" type="submit" onclick="return confirm(' Are you sure to update this record ? ')">UPDATE</button>
+                            <form action="/relayservermanagement">
+                                <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure to cancel to update this record ?')">CANCEL</button></form>
+                        @endforeach
+                    </p>
+            </div>
+    </body>
+</html>

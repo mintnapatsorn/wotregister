@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>MY DOMAIN</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <!-- Navbar Bootstrap -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <style>
+            #example2 {
+              background-repeat: no-repeat;
+              /*background-size: 300px 100px;*/
+              /*background-size: auto;*/
+              /*background-size: contain,cover;*/ /*คือการกำหนดแบลคกาวน์ตามขนาดภาพดั้งเดิม*/
+              background-size:cover; /*คือการปรับภาพแบลคกราวด์ให้สมดุลกับขนาดของหน้าเว็บจริง*/
+            }
+
+            .footer {
+                 position: fixed;
+                 left: 0;
+                 bottom: 0;
+                 width: 100%;
+                 background-color: #808080;
+                 color: white;
+                 text-align: left;
+              }
+
+              .nav ul {
+                list-style: none;
+                background-color: #2C4554;
+                text-align: left;
+                padding: 0;
+                margin: 0;
+              }
+
+              .nav li {
+                font-family: 'Oswald', sans-serif;
+                font-size: 1.2em;
+                line-height: 40px;
+                text-align: left;
+              }
+
+              .nav a {
+                text-decoration: none;
+                color: #fff;
+                display: block;
+                padding-left: 15px;
+                border-bottom: 1px solid #888;
+                transition: .3s background-color;
+              }
+
+              .nav a:hover {
+                background-color: #005f5f;
+              }
+
+              .nav a.active {
+                background-color: #365468;
+                color: #FFFFFF;
+                cursor: default;
+              }
+
+              /* Sub Menus */
+              .nav li li {
+                font-size: .8em;
+              }
+
+              /*******************************************
+                 Style menu for larger screens
+
+                 Using 650px (130px each * 5 items), but ems
+                 or other values could be used depending on other factors
+              ********************************************/
+
+              @media screen and (min-width: 650px) {
+                .nav li {
+                  width: 125px;
+                  border-bottom: none;
+                  height: 50px;
+                  line-height: 50px;
+                  font-size: 1em;
+                  display: inline-block;
+                  margin-right: -4px;
+                }
+
+                .nav a {
+                  border-bottom: none;
+                }
+
+                .nav > ul > li {
+                  text-align: center;
+                }
+
+                .nav > ul > li > a {
+                  padding-left: 0;
+                }
+
+                /* Sub Menus */
+                .nav li ul {
+                  position: absolute;
+                  display: none;
+                  width: inherit;
+                }
+
+                .nav li:hover ul {
+                  display: block;
+                }
+
+                .nav li ul li {
+                  display: block;
+                }
+              }
+
+              .topnav-right {
+                float: right;
+              }
+
+
+              /*circle progressbar*/
+              .progress {
+                margin: 10px;
+                width: 700px;
+              }
+
+        </style>
+    </head>
+    <body class="new" background="8.jpg" id="example2">
+        <!-- <nav> -->
+        <header>
+            <div class="nav">
+              <ul>         
+                <li class="home" href="{{ url('/') }}"><img src="2.png" width="48" height="35"></li>
+                <li class="home"><a  href="{{ url('/') }}">Home</a></li>
+                <li class="home"><a  href="{{ url('/getstarted') }}">Getting started</a></li>
+                <li class="tutorials"><a class="active" href="#">Domain</a>
+                  <ul>
+                    <li><a href="{{ url('/userregisdomain') }}">Domain register</a></li>
+                    <li><a class="active" href="{{ url('/mydomain') }}">My domain</a></li>
+                  </ul>
+                </li>
+                <li class="news"><a href="#">Quota</a>
+                  <ul>
+                    <li><a href="{{ url('/requestpermission') }}">Request quota</a></li>
+                    <li><a href="{{ url('/requestpermissionsuccessful') }}">Sent box</a></li>
+                  </ul>
+                </li>
+                <li class="contact"><a href="{{ url('/news') }}">Contact us</a></li>
+                  <li class="tutorials topnav-right"><a href="#"><!-- <span class="glyphicon glyphicon-log-in"> --><?php echo session('name'); ?></span><span class="caret"></span></a>
+                        <ul>
+                            @foreach(Session::get('groups') as $groups)
+                                @if($groups =='/wot/administrator')
+                                    <li><a href="{{ url('/adminmanagement') }}">Manage system data</a></li>
+                                @endif
+                            @endforeach
+                          <li><a href="{{ url('/logout') }} ">Logout</a></li>
+                        </ul>
+                  </li>
+              </ul>
+            </div>
+          </header>
+
+        <!-- <form action="/sendrequeststatus"> -->
+        <br></br>
+        <div class="table table-dark">
+            <font size="6px" color="darkorange"><p align="center">My Domain</p></font>
+            <!-- Progress Bar -->
+
+            <table align="center" width="60%">
+                <tr>
+                    <!-- <th><font size="3px"><p align="center">ID</p></font></th> -->
+                    <th><font size="4px" color="white"><p align="center">Domain</p></font></th>
+                    <th><font size="4px" color="white"><p align="center">Description</p></font></th>
+                    <th><font size="4px"color="white"><p align="center">Region</p></font></th>
+                    <th><font size="4px" color="white"><p align="center">Registration date</p></font></th>
+                    <th><font size="4px" color="white"><p align="center">Action</p></font></th>
+                </tr>
+                @foreach($alluserdomain as $alluserdomains) 
+                  <tr>
+                    <!-- <td><font size="2px"><p align="center">{{$alluserdomains->id}}</p></font></td> -->
+                    <td><p align="left">&emsp;&emsp;<a href="https://{{$alluserdomains->name}}"><font size="3px" color="royalblue">{{$alluserdomains->name}}</a></p></font></td>    
+                    <td><font size="3px" color="white"><p align="left">&emsp;&emsp;{{$alluserdomains->description}}</p></font></td>
+                    <td><font size="3px" color="white"><p align="center">{{$alluserdomains->continent}}</p></font></td>
+                    <td><font size="3px" color="white"><p align="center">{{date('d/m/Y', $alluserdomains->timestamp)}}</font></td>
+                    <td><p align="center">
+                      <a href="{{ route('domaindelete',$alluserdomains->id) }}"><button class="btn btn-danger"           type="submit" onclick="return confirm('Are you sure to delete this domain ?')"><span class="glyphicon glyphicon-trash"></button></a>
+                    </td>
+                  </tr>
+                @endforeach
+            </table>    
+            <br></br>
+        </div>
+
+
+        <div class="footer">
+              <br>
+              <p>&emsp;&emsp;Internet Innovation Research Team (INO)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="20.png" width="88" height="22">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Email : ino@nectec.or.th
+              </p>
+              <br>
+        </div>
+
+
+        <script type="text/javascript">
+          $(function() {
+            var current_progress = 0;
+            var interval = setInterval(function() {
+                current_progress += 10;
+                $("#dynamic")
+                .css("width", current_progress + "%")
+                .attr("aria-valuenow", current_progress)
+                .text(current_progress + "% Complete");
+                if (current_progress >= 10)
+                    clearInterval(interval);
+            }, 1000);
+          });
+        </script>
+
+    </body> 
+</html>
+
+
+
+<!-- graphic icon bootstrap -->
+<!-- https://www.w3schools.com/bootstrap/bootstrap_ref_comp_glyphs.asp -->
+<!-- https://glyphicons.bootstrapcheatsheets.com -->

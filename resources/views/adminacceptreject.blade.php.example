@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>CHECK USER REQUEST QUOTA</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <!-- Navbar Bootstrap-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <style>
+            #example2 {
+              background-repeat: no-repeat;
+              /*background-size: 300px 100px;*/
+              /*background-size: auto;*/
+              /*background-size: contain,cover;*/ /*คือการกำหนดแบลคกาวน์ตามขนาดภาพดั้งเดิม*/
+              background-size:cover; /*คือการปรับภาพแบลคกราวด์ให้สมดุลกับขนาดของหน้าเว็บจริง*/
+            }
+        </style>
+    </head>
+    <body background="5.jpg" id="example2">
+        <!-- <nav> -->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="/"><img src="2.png" width="48" height="35"></a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li><a href="{{ url('/adminmanagement') }}">Back to home</a></li>
+                <li><a href="{{ url('/admincheckuserrequestpermission') }}">Quota request</a></li>
+                <li><a href="{{ url('/domainmanagement') }}">Domain config</a></li>
+                <li><a href="{{ url('/relayservermanagement') }}">Relayserver management</a></li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-log-in"><?php echo session('preferred_username'); ?></span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @foreach(Session::get('groups') as $groups)
+                                @if($groups ==env('NAME_SPACE'))
+                                    <li><a href="{{ url('/') }}">Domain register</a></li>
+                                @endif
+                            @endforeach
+                          <li><a href="{{ url('/logout') }} ">Logout</a></li>
+                        </ul>
+                  </li>
+              </ul>
+
+              <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url('/logout') }} "><span class="glyphicon glyphicon-log-in"></span> </a></li>
+              </ul> -->
+            </div>
+          </nav>
+
+
+        <!-- <form action="/sendrequeststatus"> -->
+        <div class="content">
+            <font size="6px"><p align="center">ADMIN CHECK USER REQUEST QUOTA</p></font>
+            <table align="center" width="90%">
+                <tr>
+                    <th><font size="2px"><p align="center">REQUEST ID</p></font></th>
+                    <th><font size="2px"><p align="center">USER ID</p></font></th>
+                    <th><font size="2px"><p align="center">NAME</p></font></th>
+                    <th><font size="2px"><p align="center">REQUEST AMMOUNT</p></font></th>
+                    <th><font size="2px"><p align="center">ALL QUOTA</p></font></th>
+                    <th><font size="2px"><p align="center">QUOTA USED</p></font></th>
+                    <th><font size="2px"><p align="center">STATUS</p></font></th>
+                    <th><font size="2px"><p align="center">ACTIVITY</p></font></th>
+                </tr>
+                    @foreach($userpermissiondata as $userpermissiondata)
+                        @if($userpermissiondata->status == 0)
+                            <tr>
+                                <td><font size="2px"><p align="center">{{$userpermissiondata->id}}</p></font></td>
+                                <td><font size="2px"><p align="center">{{$userpermissiondata->account_id}} </p></font></td>    
+                                <td><font size="2px"><p align="center">{{$userpermissiondata->username}}</p></font></td>
+                                    <!-- <pre>{{print_r($userpermissiondata)}}</pre></p></font></td>  --> 
+                                <td><font size="2px"><p align="center">{{$userpermissiondata->ammount}}</p></font></td>
+                                <td><font size="2px"><p align="center">{{$userpermissiondata->total_permission}}</p></font></td>
+                                <td><font size="2px"><p align="center">{{$userpermissiondata->permission_used}}</p></font></td>
+                                <td><font size="2px"><p align="center">{{$userpermissiondata->status}}</p></font></td>
+                                <td>
+                                <p align="center">
+                                  <a href="{{ route('accept',$userpermissiondata->id) }}"><button class="btn btn-success"           type="submit" onclick="return confirm('are you sure to accept requrest ?')"><font size="2">ACCEPT</font></button></a>
+                                  <a href="{{ route('reject',$userpermissiondata->id) }}"><button class="btn btn-danger" type="submit"onclick="return confirm('Are you sure to reject request ? ')"><font size="2">REJECT</font></button></a>
+                                  <a href="{{ route('getdatachange',$userpermissiondata->id) }}"><button class="btn btn-warning" type="submit" onclick="return confirm('Are you sure to change request ammount ? ')"><font size="2">CHANGE</font></button></a>
+
+                                  <!-- <button class="btn btn-warning" data-mytitle="{{$userpermissiondata->account_id}}" data-mydescription="{{$userpermissiondata->ammount}}" data-catid="{{$userpermissiondata->id}}" data-toggle="modal" data-target="#change" ><font size="2">CHANGE1</font></button></p> -->
+
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach 
+            </table>    
+            <br></br>
+            <p align="center"></p>
+            <a href="{{ route('acceptall') }}"><p align="center"><button class="btn btn-info" type="submit">ACCEPT ALL</button></p></a>
+            <br></br>
+        </div>
+
+        <div class="container">
+        <!-- Modal Bootstrap for edit relayserver data  -->
+            <div class="modal fade" id="change" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">EDIT RELAYSERVER DATA</h4>
+                        </div>
+                        <form action="{{ route('change' ,$userpermissiondata->id)}}" method="post">
+                        {{csrf_field()}}
+                            <div class="modal-body">
+                                <label>User ID : <input type="text" name="userid" value=""></label>
+                                <label>Ammount : <input type="text" name="ammount" value=""></label>
+                                <br></br>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure to update change ?')">UPDATE CHANGE</button>
+                                <button type="button" class="btn btn-danger" data-dismiss="modal" onclick="return confirm('Are you sure to cancel update ?')">CANCEL</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

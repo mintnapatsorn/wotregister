@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>SENT BOX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <style>
+            #example2 {
+              background-repeat: no-repeat;
+              /*background-size: 300px 100px;*/
+              /*background-size: auto;*/
+              /*background-size: contain,cover;*/ /*คือการกำหนดแบลคกาวน์ตามขนาดภาพดั้งเดิม*/
+              background-size:cover; /*คือการปรับภาพแบลคกราวด์ให้สมดุลกับขนาดของหน้าเว็บจริง*/
+            }
+
+            .footer {
+                 position: fixed;
+                 left: 0;
+                 bottom: 0;
+                 width: 100%;
+                 background-color: #808080;
+                 color: white;
+                 text-align: left;
+              }
+
+              .nav ul {
+                list-style: none;
+                background-color: #2C4554;
+                text-align: left;
+                padding: 0;
+                margin: 0;
+              }
+
+              .nav li {
+                font-family: 'Oswald', sans-serif;
+                font-size: 1.2em;
+                line-height: 40px;
+                text-align: left;
+              }
+
+              .nav a {
+                text-decoration: none;
+                color: #fff;
+                display: block;
+                padding-left: 15px;
+                border-bottom: 1px solid #888;
+                transition: .3s background-color;
+              }
+
+              .nav a:hover {
+                background-color: #005f5f;
+              }
+
+              .nav a.active {
+                background-color: #365468;
+                color: #FFFFFF;
+                cursor: default;
+              }
+
+              /* Sub Menus */
+              .nav li li {
+                font-size: .8em;
+              }
+
+              /*******************************************
+                 Style menu for larger screens
+
+                 Using 650px (130px each * 5 items), but ems
+                 or other values could be used depending on other factors
+              ********************************************/
+
+              @media screen and (min-width: 650px) {
+                .nav li {
+                  width: 125px;
+                  border-bottom: none;
+                  height: 50px;
+                  line-height: 50px;
+                  font-size: 1em;
+                  display: inline-block;
+                  margin-right: -4px;
+                }
+
+                .nav a {
+                  border-bottom: none;
+                }
+
+                .nav > ul > li {
+                  text-align: center;
+                }
+
+                .nav > ul > li > a {
+                  padding-left: 0;
+                }
+
+                /* Sub Menus */
+                .nav li ul {
+                  position: absolute;
+                  display: none;
+                  width: inherit;
+                }
+
+                .nav li:hover ul {
+                  display: block;
+                }
+
+                .nav li ul li {
+                  display: block;
+                }
+              }
+
+              .topnav-right {
+                float: right;
+              }
+        </style>
+  </head>
+      <body class="new" background="5.jpg" id="example2">
+        <!-- <nav> -->
+        <header>
+            <div class="nav">
+              <ul>         
+                <li class="home" href="{{ url('/') }}"><img src="2.png" width="48" height="35"></li>
+                <li class="home"><a  href="{{ url('/') }}">Home</a></li>
+                <li class="home"><a  href="{{ url('/getstarted') }}">Getting started</a></li>
+                <li class="tutorials"><a href="#">Domain</a>
+                  <ul>
+                    <li><a href="{{ url('/userregisdomain') }}">Domain register</a></li>
+                    <li><a href="{{ url('/mydomain') }}">My domain</a></li>
+                  </ul>
+                </li>
+                <li class="news"><a class="active" href="#">Quota</a>
+                  <ul>
+                    <li><a href="{{ url('/requestpermission') }}">Request quota</a></li>
+                    <li><a class="active" href="{{ url('/requestpermissionsuccessful') }}">Sent box</a></li>
+                  </ul>
+                </li>
+                <li class="contact"><a href="{{ url('/news') }}">Contact us</a></li>
+                  <li class="tutorials topnav-right"><a href="#"><!-- <span class="glyphicon glyphicon-log-in"> --><?php echo session('name'); ?></span><span class="caret"></span></a>
+                        <ul>
+                            @foreach(Session::get('groups') as $groups)
+                                @if($groups =='/wot/administrator')
+                                    <li><a href="{{ url('/adminmanagement') }}">Manage system data</a></li>
+                                @endif
+                            @endforeach
+                          <li><a href="{{ url('/logout') }} ">Logout</a></li>
+                        </ul>
+                  </li>
+              </ul>
+            </div>
+          </header>
+
+        <br></br>
+        <div class="content">
+            <font size="8px" style="color:darkred"><p align="center">Sent box</p></font>
+            <table align="center" width="50%">
+                <tr>
+                    <th><font size="4px" color="#350466"><p align="center">ID</p></font></th>
+                    <th><font size="4px" color="#350466"><p align="center">Request Type</p></font></th>
+                    <th><font size="4px" color="#350466"><p align="center">Amount</p></font></th>
+                    <th><font size="4px" color="#350466"><p align="center">Status</p></font></th>
+                    <!-- <th><font size="4px" color="#FAA416"><p align="center">Action</p></font></th> -->
+                </tr>
+                @foreach($data as $data)
+                  <tr>
+                    <td><font size="3px" style="color:black"><p align="center">{{$data->id}}</p></font></td>
+                    <td><font size="3px" style="color:black"><p align="center">Permission Request</p></font></td>    
+                    <td><font size="3px" style="color:black"><p align="center">{{$data->ammount}}</p></font></td>
+                    @if($data->status == 0)
+                      <td><font size="3px" color="#FA9814"><p align="center">Pending</p></font></td>
+                    @endif
+
+                    @if($data->status == 1)
+                      <td><font size="3px" color="#02801F"><p align="center">Accept</p></font></td>
+                    @endif
+
+                    @if($data->status == 2)
+                      <td><font size="3px" color="#C1031D"><p align="center">Please require again</p></font></td>
+                    @endif
+
+                    <!-- @if($data->status == 2)
+                      <td><p align="center"><button class="btn btn-warning"><font size="2">CONFIRM</font></button></p></td>
+                    @endif -->
+                  </tr>
+                @endforeach 
+            </table>    
+            <br></br>
+        </div>
+
+            <div class="footer">
+              <br>
+              <p>&emsp;&emsp;&emsp;Internet Innovation Research Team (INO)&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<img src="20.png" width="88" height="22">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;Email : ino@nectec.or.th
+              </p>
+              <br>
+            </div>
+      </body>
+</html>
+

@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="{{ app()->getLocale() }}">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>ALERT</title>
+
+        <!-- Fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+
+        <!-- Navbar Bootstrap-->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <!-- Styles -->
+        <style>
+            #example2 {
+              background-repeat: no-repeat;
+              /*background-size: 300px 100px;*/
+              /*background-size: auto;*/
+              /*background-size: contain,cover;*/ /*คือการกำหนดแบลคกาวน์ตามขนาดภาพดั้งเดิม*/
+              background-size:cover; /*คือการปรับภาพแบลคกราวด์ให้สมดุลกับขนาดของหน้าเว็บจริง*/
+            }
+        </style>    
+    </head>
+    <body background="5.jpg" id="example2">
+        <!-- <nav> -->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+              <div class="navbar-header">
+                <a class="navbar-brand" href="/"><img src="2.png" width="48" height="35"></a>
+              </div>
+              <ul class="nav navbar-nav">
+                <li><a href="{{ url('/adminmanagement') }}">Back to home</a></li>
+                <li><a href="{{ url('/admincheckuserrequestpermission') }}">Quota request</a></li>
+                <li><a href="{{ url('/domainmanagement') }}">Domain config</a></li>
+                <li><a href="{{ url('/relayservermanagement') }}">Relayserver management</a></li>
+              </ul>
+
+              <ul class="nav navbar-nav navbar-right">
+                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-log-in"><?php echo session('preferred_username'); ?></span><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            @foreach(Session::get('groups') as $groups)
+                                @if($groups ==env('NAME_SPACE'))
+                                    <li><a href="{{ url('/') }}">Domain register</a></li>
+                                @endif
+                            @endforeach
+                          <li><a href="{{ url('/logout') }} ">Logout</a></li>
+                        </ul>
+                  </li>
+              </ul>
+
+              <!-- <ul class="nav navbar-nav navbar-right">
+                <li><a href="{{ url('/logout') }} "><span class="glyphicon glyphicon-log-in"></span> </a></li>
+              </ul> -->
+            </div>
+          </nav>
+
+        <div class="flex-center position-ref full-height">
+            <div class="content">
+
+                <!-- <form action="/requestpermission" >
+                {{csrf_field()}} -->
+
+                <br></br><br></br><br></br><br></br>
+                <p align="center"><font size="500" style="color:gray">
+                    EMPTY REQUEST PERMISSION</font></p>
+                <br></br>
+                <!-- <p align="center"><button class="button" type="submit" >REQUEST PERMISSION</button></p> -->
+
+            </div>
+        </div>
+
+    </body>
+</html>

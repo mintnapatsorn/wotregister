@@ -1,0 +1,47 @@
+version: '2'
+
+services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    #container_name: phpmyadmin
+    environment:
+     - PMA_ARBITRARY=1
+    restart: always
+    ports:
+     - 8086:80
+
+  mariadb:
+    image: 'bitnami/mariadb:10.1'
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+      - MARIADB_USER=${DB_USERNAME}
+      - MARIADB_DATABASE=${DB_DATABASE}
+      - MARIADB_PASSWORD=${DB_PASSWORD}
+
+  myapp:
+    tty: true
+    image: mintnapatsorn/wotregister:1.0
+    # image: bitnami/laravel:5.4.30-r0
+    # build:
+    #   context: .
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_DATABASE=${DB_DATABASE}
+      - DB_PASSWORD=${DB_PASSWORD}
+
+      - APP_KEY=${APP_KEY}
+      - APP_DEBUG=${APP_DEBUG}
+      - AUTH_CLIENT_ID=${BOXBOX_CLIENT_ID}
+      - AUTH_CLIENT_SECRET=${BOXBOX_CLIENT_SECRET}
+      - AUTH_REDIRECT=${BOXBOX_REDIRECT}
+      - AUTH_LOGOUT=${BOXBOX_LOGOUT_DIRECT_URL}
+      - AUTH_URL=${BOXBOX_GET_AUTH_URL}
+      - AUTH_TOKEN=${BOXBOX_GET_TOKEN_URL}
+      - AUTH_DATA=${BOXBOX_GET_USER_FROM_TOKEN_URL}
+    depends_on:
+      - mariadb
+    ports:
+      - 3000:3000
+    volumes:   #ที่ต้องมีการ volume เพื่อกันข้อมูลหายไป เมื่อทำการ start/up
+      - ./:/app
