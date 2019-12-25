@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
+        <!-- silide getstarted -->
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
         <title>GETTING STARTED</title>
 
         <!-- Styles -->
@@ -56,11 +59,11 @@
           /* Footer color for sake of consistency with Navbar */
           .page-footer {
             background-color: #1C2331; }
+
         </style>
     </head>
     <body>
-
-        <!-- Navbar -->
+      <!-- Navbar -->
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
           <div class="container">
 
@@ -79,29 +82,33 @@
 
               <!-- Left -->
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-itema">
                   <a class="nav-link" style="font-size: 17px;" href="{{ url('/') }}">Home
                     <span class="sr-only">(current)</span>
                   </a>
                 </li>
                 <li class="nav-item active">
-                  <a class="nav-link" style="font-size: 17px;" href="{{ url('/getstarted') }}" >Getting started</a>
+                  <a class="nav-link" style="font-size: 17px;" href="{{ url('/getstarted') }}">Getting started</a>
                 </li>
                 <li class="nav-item dropdown" style="font-size: 17px;">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" >
                     Domain
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ url('/userregisdomain') }}">Domain register</a>
                     <a class="dropdown-item" href="{{ url('/mydomain') }}">My domain</a>
+                    <a class="dropdown-item" href="{{ url('/userregisdomain') }}">Domain register</a>
+                    <a class="dropdown-item" href="{{ url('/requestpermission') }}">Requested quota</a>
                   </div>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" style="font-size: 17px;" href="{{ url('/requestpermission') }}">Request quota</a>
+                <li class="nav-item" style="font-size: 17px;">
+                  <a class="nav-link" href="{{ url('/opendistro') }}">Data storage token</a>
                 </li>
                 <li class="nav-item" style="font-size: 17px;">
                   <a class="nav-link" href="{{ url('/news') }}">Contact us</a>
                 </li>
+                <!-- <li class="nav-item" style="font-size: 17px;">
+                  <a class="nav-link" href="{{ url('/opendistro') }}">Data storage token</a>
+                </li> -->
               </ul>
 
               <!-- Right -->
@@ -109,7 +116,7 @@
 
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle nav-link rounded" href="#" id="navbarDropdown" target="_blank" role="button" data-toggle="dropdown" aria-haspopup="true">
-                    <i class="fas fa-user mr-2"></i><?php echo session('preferred_username');  ?>
+                    <i class="fas fa-user mr-2"></i><?php echo session('preferred_username'); ?>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     @foreach(Session::get('groups') as $groups)
@@ -133,10 +140,9 @@
                   </a>
                 </li>
 
-                <li class="nav-item">
-                  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded"
-                    target="_blank">
-                    <i class="fab fa-github mr-2"></i>MECA GitHub
+                <li class="nav-item active">
+                  <a href="https://portal.meca.in.th" class="nav-link border border-light rounded" target="_blank">
+                    <img src="opendistro.png" width="20" height="20"> Data storage dashboard
                   </a>
                 </li>
 
@@ -350,6 +356,7 @@
           <!-- Mask & flexbox options-->
         </div>
         <!-- Full Page Intro -->
+          
         <!--Main layout-->
         <script>
           new WOW().init();

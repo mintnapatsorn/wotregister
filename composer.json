@@ -11,7 +11,8 @@
         "laravel/socialite": "^3.2",
         "laravel/tinker": "~1.0",
         "laravelcollective/html": "^5.4.0",
-        "yarob/laravel-expirable": "^1.0"
+        "yarob/laravel-expirable": "^1.0",
+        "ixudra/curl": "6.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

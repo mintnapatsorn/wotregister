@@ -123,9 +123,8 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded"
-                    target="_blank">
-                    <i class="fab fa-github mr-2"></i>MECA GitHub
+                  <a href="/opendistro" class="nav-link border border-light rounded">
+                    <img src="opendistro.png" width="20" height="20"> Open Distro
                   </a>
                 </li>
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Support\Facades\DB;
+
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -20,6 +22,15 @@ class checkboxboxlogin
          * If user has signed in yet redirect him to somewhere.
          */
         if (session('token')) {
+            $account = DB::table('accounts')->where('email',session('email'))->get();       
+
+            if(count($account)==0)
+            {
+                DB::table('accounts')->insert(['email' => session('email'),'optout' => 0]);
+                mail(session('email'), "WoT Cloud :) ", "Welcome ".session('preferred_username')." to WoT Cloud");
+
+                return redirect('login/getfirstpermission');
+            }
             return $next($request);
         }
         

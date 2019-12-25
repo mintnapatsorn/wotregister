@@ -157,7 +157,6 @@
         </style>
     </head>
     <body>
-
         <!-- Navbar -->
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
           <div class="container">
@@ -177,29 +176,33 @@
 
               <!-- Left -->
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-itema">
                   <a class="nav-link" style="font-size: 17px;" href="{{ url('/') }}">Home
                     <span class="sr-only">(current)</span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" style="font-size: 17px;" href="{{ url('/getstarted') }}" >Getting started</a>
+                  <a class="nav-link" style="font-size: 17px;" href="{{ url('/getstarted') }}">Getting started</a>
                 </li>
-                <li class="nav-item dropdown" style="font-size: 17px;">
+                <li class="nav-item dropdown active" style="font-size: 17px;">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" >
                     Domain
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ url('/userregisdomain') }}">Domain register</a>
                     <a class="dropdown-item" href="{{ url('/mydomain') }}">My domain</a>
+                    <a class="dropdown-item" href="{{ url('/userregisdomain') }}">Domain register</a>
+                    <a class="dropdown-item" href="{{ url('/requestpermission') }}">Requested quota</a>
                   </div>
                 </li>
-                <li class="nav-item active">
-                  <a class="nav-link" style="font-size: 17px;" href="{{ url('/requestpermission') }}">Request quota</a>
+                <li class="nav-item" style="font-size: 17px;">
+                  <a class="nav-link" href="{{ url('/opendistro') }}">Data storage token</a>
                 </li>
                 <li class="nav-item" style="font-size: 17px;">
                   <a class="nav-link" href="{{ url('/news') }}">Contact us</a>
                 </li>
+                <!-- <li class="nav-item" style="font-size: 17px;">
+                  <a class="nav-link" href="{{ url('/opendistro') }}">Data storage token</a>
+                </li> -->
               </ul>
 
               <!-- Right -->
@@ -220,21 +223,20 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="https://www.facebook.com/mecanectec" class="nav-link" target="_blank">
+                  <a href="https://www.facebook.com/" class="nav-link" target="_blank">
                     <i class="fab fa-facebook-f"></i>
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a href="https://twitter.com/mecanectec" class="nav-link" target="_blank">
+                  <a href="https://twitter.com/" class="nav-link" target="_blank">
                     <i class="fab fa-twitter"></i>
                   </a>
                 </li>
 
-                <li class="nav-item">
-                  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded"
-                    target="_blank">
-                    <i class="fab fa-github mr-2"></i>MECA GitHub
+                <li class="nav-item active">
+                  <a href="https://portal.meca.in.th" class="nav-link border border-light rounded" target="_blank">
+                    <img src="opendistro.png" width="20" height="20"> Data storage dashboard
                   </a>
                 </li>
 
@@ -265,14 +267,14 @@
                     <div class="card-body">
 
                       <!-- Form -->
-                        <strong><font size="8px" style="color:darkred"><p align="center">Sent box</p></font></strong>
+                        <strong><font size="6px" style="color:darkred"><p align="center">Requested quota</p></font></strong>
                         <table id="example" align="center" width="100%">
                           <thead>
                             <tr>
-                                <th><font size="4px" color="#350466"><p align="center">Request Type</p></font></th>
-                                <th><font size="4px" color="#350466"><p align="center">Amount</p></font></th>
-                                <th><font size="4px" color="#350466"><p align="center">Date</p></font></th>
-                                <th><font size="4px" color="#350466"><p align="center">Status</p></font></th>
+                                <th><font size="3px" color="#350466"><p align="center">Request Type</p></font></th>
+                                <th><font size="3px" color="#350466"><p align="center">Amount</p></font></th>
+                                <th><font size="3px" color="#350466"><p align="center">Date</p></font></th>
+                                <th><font size="3px" color="#350466"><p align="center">Status</p></font></th>
                             </tr>
                           </thead>
                           <tbody>
@@ -361,7 +363,8 @@
                       <div class="form-row">
                         <div class="col-md-12 mb-3">
                           <label for="validationServer033">Quota amount</label>
-                          <input type="text" name="totalpermission" class="form-control" id="validationServer033" placeholder="Quota amount" required>
+                          <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"name="totalpermission" class="form-control" id="validationServer033" placeholder="Quota amount" required>
+                          <!-- <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" /> -->
                         </div>
                       </div> 
                       <div class="form-row">
@@ -372,8 +375,8 @@
                       </div>
                   </div>
                   <div class="modal-footer">
-                    <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure to add new relay server data ? ')">SEND</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">CANCEL</button>
+                    <button type="submit" class="btn btn-success" onclick="return confirm('Are you sure to request new quota ? ')">Request</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
                   </div>
                 </form>
               </div>

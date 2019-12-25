@@ -54,4 +54,10 @@ return [
         'redirect' => env('AUTH_REDIRECT'),
     ],
 
+    'opendistro' => [
+        'client_id' => env('OPENDISTRO_CLIENT_ID'),         // Your OpenDistro Client ID
+        'client_secret' => env('OPENDISTRO_CLIENT_SECRET'), // Your OpenDistro Client Secret
+        'redirect' => env('OPENDISTRO_REDIRECT'),
+    ],
+
 ];

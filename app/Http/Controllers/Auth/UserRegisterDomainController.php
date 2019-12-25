@@ -8,6 +8,8 @@ use App\ServerList;
 
 use App\relayserver_list;
 
+use App\mydomain;
+
 //use App\Http\Controllers\Auth\Response;
 use Response;
 
@@ -137,9 +139,25 @@ class UserRegisterDomainController extends Controller
         $admin_domain_select = DB::table('domain_default')->value('domain_name');
 
         //count all user permission
-        $permission = DB::table('user_permission')->where('account_id',$userid)->value('total_permission');
+        $checkemptypermission = DB::table('user_permission')->where('account_id',$userid)->value('account_id');
+        // $permission = DB::table('user_permission')->where('account_id',$userid)->value('total_permission');
+        // $permission_used = DB::table('user_permission')->where('account_id',$userid)->value('permission_used');
+        if($checkemptypermission == 0){
+            //Add data to user_permission for keep permission data
+            $userid = DB::table('accounts')->where('email',session('email'))->value('id');
+            DB::table('user_permission')->insert(['account_id'=>$userid,'username'=>session('preferred_username'),'total_permission'=>100,'permission_used'=>0,'total'=>100]);  
 
-        $permission_used = DB::table('user_permission')->where('account_id',$userid)->value('permission_used');
+            $usergetstatus = session('groups');
+            //login 3 status
+            foreach ($usergetstatus as $usergetstatus) {
+                if($usergetstatus==env('NAME_SPACE')){
+                    return redirect('/adminmanagement');
+                }
+            } 
+        }else{
+            $permission = DB::table('user_permission')->where('account_id',$userid)->value('total_permission');
+            $permission_used = DB::table('user_permission')->where('account_id',$userid)->value('permission_used');
+        }
 
         //check permission request was accept
         // $statusrequestpermission =DB::table('permission_request')->where('account_id',$userid)->value('status');
@@ -190,5 +208,17 @@ class UserRegisterDomainController extends Controller
             return view('userregisdomain',compact('interserverlist','admin_domain_select','permission_used','allpermission'));
 
         }
+    }
+
+
+    public function updaterelayservermydomain(Request $request){
+
+        $dominid = $request->get('domainid');
+
+        $continent = $request->get('changeserverlistbox');
+
+        DB::table('domains')->where('id',$dominid)->update(['continent'=>$continent]);
+  
+        return back();
     }
 }

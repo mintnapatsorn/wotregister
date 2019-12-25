@@ -14,6 +14,11 @@ use App\Http\Controllers\Auth\Session;
 use Illuminate\Http\Request;
 
 
+use App\relayserver_list;
+
+use App\mydomain;
+
+
 class BoxBoxAuthController extends Controller
 {
     public function redirectToProvider()
@@ -25,6 +30,9 @@ class BoxBoxAuthController extends Controller
     {
 
         $user = Socialite::driver('boxbox')->user();
+        if($user->email=='default@meca.in.th'){
+            return view('alertlogin');
+        }
         $account = DB::table('accounts')->where('email',$user->email)->get();
 
         session(['token' => $user->token]);
@@ -106,11 +114,16 @@ class BoxBoxAuthController extends Controller
 
         $sumuserdomain = count($alluserdomain);
 
+        $interserverlist = relayserver_list::all();
+
         // $percent =10;
         // $percent = ($sumuserdomain*100)/$data;
         // $percent = $percent*100;
+
         
-        return view('mydomain',['alluserdomain' => $alluserdomain]);//->with('percent',$percent);
+        return view('mydomain',['alluserdomain' => $alluserdomain,'interserverlist' => $interserverlist]);//->with('percent',$percent);
+        // return view('testajaxnew',['alluserdomain' => $alluserdomain,'interserverlist' => $interserverlist]);//->with('percent',$percent);
+
 
     }
 
@@ -131,5 +144,53 @@ class BoxBoxAuthController extends Controller
   
         return back();
     }
+
+     public function renewreclamtoken($requestId){
+
+        //generate uuid v4
+        $uuidBin = random_bytes(16);
+        $uuidBin &= "\xFF\xFF\xFF\xFF\xFF\xFF\x0F\xFF\x3F\xFF\xFF\xFF\xFF\xFF\xFF\xFF";
+        $uuidBin |= "\x00\x00\x00\x00\x00\x00\x40\x00\x80\x00\x00\x00\x00\x00\x00\x00";
+        $uuidHex = bin2hex($uuidBin); //result of uuid generate token
+
+        $arruuid = str_split($uuidHex);
+        $generatetoken = $arruuid[0].$arruuid[1].$arruuid[2].$arruuid[3].$arruuid[4].$arruuid[5].$arruuid[6].$arruuid[7]."-".$arruuid[8].$arruuid[9].$arruuid[10].$arruuid[11]."-".$arruuid[12].$arruuid[13].$arruuid[14].$arruuid[15]."-".$arruuid[16].$arruuid[17].$arruuid[18].$arruuid[19]."-".$arruuid[20].$arruuid[21].$arruuid[22].$arruuid[23].$arruuid[24].$arruuid[25].$arruuid[26].$arruuid[27].$arruuid[28].$arruuid[29].$arruuid[30].$arruuid[31];
+
+
+        DB::table('domains')->where('id',$requestId)->update(['reclamation_token'=>$generatetoken]);
+
+        $notification = array('message' => $requestId , 'alert-type'=>'error');
+        return back()->with($notification);
+
+    }
+
+    public function renewreclamtest(Request $request){
+
+        $userid = DB::table('accounts')->where('email',session('email'))->value('id');
+
+        $domain=$request->get('domain');
+
+        $uuidBin = random_bytes(16);
+        $uuidBin &= "\xFF\xFF\xFF\xFF\xFF\xFF\x0F\xFF\x3F\xFF\xFF\xFF\xFF\xFF\xFF\xFF";
+        $uuidBin |= "\x00\x00\x00\x00\x00\x00\x40\x00\x80\x00\x00\x00\x00\x00\x00\x00";
+        $uuidHex = bin2hex($uuidBin); //result of uuid generate token
+
+        $arruuid = str_split($uuidHex);
+        $generatetoken = $arruuid[0].$arruuid[1].$arruuid[2].$arruuid[3].$arruuid[4].$arruuid[5].$arruuid[6].$arruuid[7]."-".$arruuid[8].$arruuid[9].$arruuid[10].$arruuid[11]."-".$arruuid[12].$arruuid[13].$arruuid[14].$arruuid[15]."-".$arruuid[16].$arruuid[17].$arruuid[18].$arruuid[19]."-".$arruuid[20].$arruuid[21].$arruuid[22].$arruuid[23].$arruuid[24].$arruuid[25].$arruuid[26].$arruuid[27].$arruuid[28].$arruuid[29].$arruuid[30].$arruuid[31];
+
+
+       $useridindomain = DB::table('domains')->where('name',$domain)->value('account_id');
+
+       if($userid == $useridindomain){
+            DB::table('domains')->where('name',$domain)->update(['reclamation_token'=>$generatetoken]);
+            return response()->json([
+                'token' => $generatetoken,
+                'domain' => $domain
+            ]);
+       }
+        
+
+    }
+
 
 }

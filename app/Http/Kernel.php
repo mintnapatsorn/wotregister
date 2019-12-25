@@ -67,5 +67,7 @@ class Kernel extends HttpKernel
         'checkmecaslogin' => \App\Http\Middleware\checkmecaslogin::class,
 
         'checkboxboxlogin' => \App\Http\Middleware\checkboxboxlogin::class,
+
+        'checkopendistrologin' => \App\Http\Middleware\checkopendistrologin::class,
     ];
 }

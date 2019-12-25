@@ -10,12 +10,17 @@
     // });//->middleware('checkmecaslogin');
 
     //Welcome Page
-    Route::get('/', 'Auth\BoxBoxAuthController@loaddatatohome')->middleware('checkboxboxlogin');
+    // Route::get('/', 'Auth\BoxBoxAuthController@loaddatatohome')->middleware('checkboxboxlogin');
+    Route::get('/', 'Auth\OpenDistroAuthController@loaddatatohome')->middleware('checkopendistrologin');
 
     //getstarted page
     Route::get('/getstarted', function () {
-        return view('getstarted');
+        return view('gettingstartedtest');
     })->middleware('checkboxboxlogin');
+
+    Route::get('/teststart',function(){
+        return view('getstarted');
+    });
 
     //domainregister
     // Route::get('/userregisdomain', function () {
@@ -23,7 +28,7 @@
     // })->middleware('checkmecaslogin');
 
     //add server list to userregis domain page 
-    Route::get('/userregisdomain', 'Auth\UserRegisterDomainController@serverlist')->middleware('checkboxboxlogin');
+    Route::get('/userregisdomain', 'Auth\UserRegisterDomainController@serverlist')->middleware('checkopendistrologin');
 
     //test part register domain post data from form to controller to keep at database for regis domain
     Route::post('/submit','Auth\UserRegisterDomainController@regissubmit');
@@ -42,6 +47,10 @@
     Route::get('/news', function () {
         return view('news');
     })->middleware('checkboxboxlogin');
+
+    Route::get('/alertlogin',function(){
+        return view('alertlogin');
+    });
 
     Auth::routes();
 
@@ -62,26 +71,58 @@
     //get permission default for first login
     Route::get('login/getfirstpermission', 'Auth\BoxBoxAuthController@userpermissiondefault');
     //logout sso.mecas
-    Route::get('/logout','Auth\BoxBoxAuthController@getLogout'); //logout facebook login
+    // Route::get('/logout','Auth\BoxBoxAuthController@getLogout'); //logout facebook login
+    Route::get('/logout','Auth\OpenDistroAuthController@logout'); //logout facebook login
+
 
 
     Route::get('/permissioncheck',function(){
         return view('permissioncheck');
     });
 
+    //Login with boxbox sign on
+    Route::get('login/opendistro', 'Auth\OpenDistroAuthController@redirectToProvider');
+    Route::get('login/opendistro/callback', 'Auth\OpenDistroAuthController@handleProviderCallback');
 
-    Route::get('/mydomain','Auth\BoxBoxAuthController@mydomain')->middleware('checkboxboxlogin');
+    
 
     //Delete domain and return quota
     Route::get('/deletedomain/{request_id}','Auth\BoxBoxAuthController@deletedomain')->name('domaindelete');
 
+    //update relayserver in subdomain
+    Route::post('/updaterelayservermydomain','Auth\UserRegisterDomainController@updaterelayservermydomain')->name('changerelayserver');
+
+    // refresh reclam token
+    Route::get('/updatereclamtoken/{request_id}','Auth\BoxBoxAuthController@renewreclamtoken')->name('updatereclamtoken');
+    // refresh reclam token new
+    Route::get('/updatereclamtokentest','Auth\BoxBoxAuthController@renewreclamtest')->name('updatereclamtokentest');
+
+
+    Route::get('/mydomain','Auth\BoxBoxAuthController@mydomain')->middleware('checkboxboxlogin');
+
+    //test ajax
+    Route::get('/testajax',function(){
+        return view('testajax');
+    });
+
     Route::get('/requestpermission','Auth\keepuserpermissionrequestController@showrequestpermissionpage')->middleware('checkboxboxlogin');
+
+    // open distro generate token
+    Route::get('/opendistro','Auth\OpenDistroAuthController@dataplatformtoken')->middleware('checkopendistrologin');
+
+    // Route::get('/curl','Auth\OpenDistroAuthController@curl');
+    Route::post('/curl','Auth\OpenDistroAuthController@curl')->middleware('checkopendistrologin');
+
+    //Delete token
+    Route::get('/tokendelete/{request_id}','Auth\OpenDistroAuthController@tokendelete')->name('tokendelete');
+    //Delete token
+    Route::get('/tokenrevoke/{request_id}','Auth\OpenDistroAuthController@revokedtptoken')->name('tokenrevoke');
 
 
 //Admin Part
     Route::get('/adminmanagement',function(){
     	return view('adminhome');
-    });
+    })->middleware('checkboxboxlogin');
 
     // Route::get('/domainmanagement',function(){
     // 	return view('adminmanagedomain');
@@ -130,6 +171,7 @@
 
 //test get data name alpermission permission used
 Route::get('/getname','Auth\adminsendstatusrequesttouserController@getNamePerallPeruseData');
+
 
 
 

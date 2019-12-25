@@ -59,7 +59,6 @@
         </style>
     </head>
     <body>
-
         <!-- Navbar -->
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
           <div class="container">
@@ -79,7 +78,7 @@
 
               <!-- Left -->
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
+                <li class="nav-itema active">
                   <a class="nav-link" style="font-size: 17px;" href="{{ url('/') }}">Home
                     <span class="sr-only">(current)</span>
                   </a>
@@ -92,16 +91,20 @@
                     Domain
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ url('/userregisdomain') }}">Domain register</a>
                     <a class="dropdown-item" href="{{ url('/mydomain') }}">My domain</a>
+                    <a class="dropdown-item" href="{{ url('/userregisdomain') }}">Domain register</a>
+                    <a class="dropdown-item" href="{{ url('/requestpermission') }}">Requested quota</a>
                   </div>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" style="font-size: 17px;" href="{{ url('/requestpermission') }}">Request quota</a>
+                <li class="nav-item" style="font-size: 17px;">
+                  <a class="nav-link" href="{{ url('/opendistro') }}">Data storage token</a>
                 </li>
                 <li class="nav-item" style="font-size: 17px;">
                   <a class="nav-link" href="{{ url('/news') }}">Contact us</a>
                 </li>
+                <!-- <li class="nav-item" style="font-size: 17px;">
+                  <a class="nav-link" href="{{ url('/opendistro') }}">Data storage token</a>
+                </li> -->
               </ul>
 
               <!-- Right -->
@@ -133,10 +136,9 @@
                   </a>
                 </li>
 
-                <li class="nav-item">
-                  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded"
-                    target="_blank">
-                    <i class="fab fa-github mr-2"></i>MECA GitHub
+                <li class="nav-item active">
+                  <a href="https://portal.meca.in.th" class="nav-link border border-light rounded" target="_blank">
+                    <img src="opendistro.png" width="20" height="20"> Data storage dashboard
                   </a>
                 </li>
 
@@ -149,7 +151,7 @@
         <!-- Navbar -->
 
         <!-- Full Page Intro -->
-        <div class="view full-page-intro" style="background-image: url('22.png'); background-repeat: no-repeat; background-size: cover;">
+        <div class="view full-page-intro" style="background-image: url('22.jpg'); background-repeat: no-repeat; background-size: cover;">
           <!-- Mask & flexbox options-->
           <div class="mask rgba-black-light d-flex justify-content-center align-items-center">
             <!-- Content -->
@@ -180,10 +182,11 @@
         </div>
         <!-- Full Page Intro -->
         <!--Main layout-->
+        
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
+        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
         <script>
           new WOW().init();
         </script>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
-        <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

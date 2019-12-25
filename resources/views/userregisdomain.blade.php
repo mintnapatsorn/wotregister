@@ -8,6 +8,9 @@
         <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.4/dist/bootstrap-table.min.css">
         <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
+        <!-- แก้โชว์ไอคอนเป็นสี่เหลี่ยม -->
+        <link rel=”stylesheet” href=”https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css&#8221; />
+
         <title>DOMAIN REGISTER</title>
 
         <!-- Styles -->
@@ -158,7 +161,6 @@
         </style>
     </head>
     <body>
-
         <!-- Navbar -->
         <nav class="navbar fixed-top navbar-expand-lg navbar-dark scrolling-navbar">
           <div class="container">
@@ -178,29 +180,33 @@
 
               <!-- Left -->
               <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
+                <li class="nav-itema">
                   <a class="nav-link" style="font-size: 17px;" href="{{ url('/') }}">Home
                     <span class="sr-only">(current)</span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" style="font-size: 17px;" href="{{ url('/getstarted') }}" >Getting started</a>
+                  <a class="nav-link" style="font-size: 17px;" href="{{ url('/getstarted') }}">Getting started</a>
                 </li>
                 <li class="nav-item dropdown active" style="font-size: 17px;">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" >
                     Domain
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{{ url('/userregisdomain') }}">Domain register</a>
                     <a class="dropdown-item" href="{{ url('/mydomain') }}">My domain</a>
+                    <a class="dropdown-item" href="{{ url('/userregisdomain') }}">Domain register</a>
+                    <a class="dropdown-item" href="{{ url('/requestpermission') }}">Requested quota</a>
                   </div>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link" style="font-size: 17px;" href="{{ url('/requestpermission') }}">Request quota</a>
+                <li class="nav-item" style="font-size: 17px;">
+                  <a class="nav-link" href="{{ url('/opendistro') }}">Data storage token</a>
                 </li>
                 <li class="nav-item" style="font-size: 17px;">
                   <a class="nav-link" href="{{ url('/news') }}">Contact us</a>
                 </li>
+                <!-- <li class="nav-item" style="font-size: 17px;">
+                  <a class="nav-link" href="{{ url('/opendistro') }}">Data storage token</a>
+                </li> -->
               </ul>
 
               <!-- Right -->
@@ -221,21 +227,20 @@
                 </li>
 
                 <li class="nav-item">
-                  <a href="https://www.facebook.com/mecanectec" class="nav-link" target="_blank">
+                  <a href="https://www.facebook.com/" class="nav-link" target="_blank">
                     <i class="fab fa-facebook-f"></i>
                   </a>
                 </li>
 
                 <li class="nav-item">
-                  <a href="https://twitter.com/mecanectec" class="nav-link" target="_blank">
+                  <a href="https://twitter.com/" class="nav-link" target="_blank">
                     <i class="fab fa-twitter"></i>
                   </a>
                 </li>
 
-                <li class="nav-item">
-                  <a href="https://github.com/mdbootstrap/bootstrap-material-design" class="nav-link border border-light rounded"
-                    target="_blank">
-                    <i class="fab fa-github mr-2"></i>MECA GitHub
+                <li class="nav-item active">
+                  <a href="https://portal.meca.in.th" class="nav-link border border-light rounded" target="_blank">
+                    <img src="opendistro.png" width="20" height="20"> Data storage dashboard
                   </a>
                 </li>
 
@@ -266,7 +271,7 @@
                     <div class="card-body">
 
                       <!-- Form -->
-                      <form action="/submit" method="post" class="needs-validation container" novalidate>
+                      <form action="/submit" method="post" class="needs-validation" novalidate>
                       {{csrf_field()}}  
                         <!-- Heading -->
                         <h3 class="dark-grey-text text-center">
@@ -274,22 +279,12 @@
                         </h3>
                         <hr>
 
-                        <!-- <div class="from-row"> -->
-                          <!-- <div class="col-md-12 mb-3"> -->
-                            <!-- <input class="form-control" id="text" name="text" placeholder="Subdomain" rows="5"></input> -->
-                            <!-- <h6 class="pull-right" id="count_message"></h6> -->
-
-                            <!-- <label for="validationServer033">Subdomain name</label>
-                            <input type="text" class="form-control" id="text" name="text" placeholder="Subdomain" ></input>
-                            <span class="pull-right" id="count_message">example</span><font size="3" style="color:darkorange"><?php echo $admin_domain_select ?></font></font> -->
-                          <!-- </div> -->
-                        <!-- </div> -->
-
                           <div class="form-row">
                             <div class="col-md-12 mb-3">
                               <label for="validationServer033">Subdomain name</label>
-                              <input type="text" name="domain" class="form-control" id="text" placeholder="Subdomain name" required>
+                              <input type="text" oninput="this.value = this.value.replace(/[^A-Za-z0-9-.]/g, '').replace(/(\..*)\./g, '$1');" name="domain" class="form-control" id="text" placeholder="Subdomain name" required>
                               <font size="3" style="color:darkorange"><span class="pull-right" id="count_message">example</span></font></font><?php echo $admin_domain_select ?>
+                              <!-- <font color="red"><p align="left">Can not input special character</font> -->
                             </div>
                           </div>   
                           
@@ -300,11 +295,11 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
-                              <label for="exampleFormControlSelect1">Relay server</label>
-                              <select class="form-control" id="exampleFormControlSelect1" name="serverlistbox">   
-                                <option value="serverlistbox">-- please select relay server --</option>
+                              <label for="validationServer033">Relay server</label>
+                              <select class="form-control" name="serverlistbox" required="">   
+                                <option value="" required>-- please select relay server --</option>
                                 @foreach($interserverlist as $interserverlists)
-                                  <option value="{{$interserverlists->relayserver_code}}">{{$interserverlists->relayserver_code}}</option>
+                                  <option value="{{$interserverlists->relayserver_code}}" required>{{$interserverlists->relayserver_code}} ({{$interserverlists->description}})</option>
                                 @endforeach
                               </select>
                             </div>
@@ -312,7 +307,7 @@
 
                           <br>
                           <div class="text-center">
-                            <button type="submit" class="btn btn-warning fas fa-cloud-upload-alt"> Send</button>
+                            <button type="submit" class="btn btn-warning fas fa-paper-plane"> Submit</button>
                             <hr>
                           </div>
                       </form>
@@ -343,7 +338,7 @@
                           </li>
                         </ul>
                     </section>
-                      <p>Time update at <font color="darkred"><span id="datetime"></span></font></p>
+                      <!-- <p>Time update at <font color="darkred"><span id="datetime"></span></font></p> -->
                       <a href="{{ url('/mydomain') }}"><button type="button" class="btn btn-info fas fa-clipboard"> My domain</button></a>
                   </main>
                 </div>
@@ -488,36 +483,32 @@
           document.getElementById("datetime").innerHTML = dt.toLocaleString();
         </script>
 
-
-        <!-- count data input -->
-        <!-- <script type="text/javascript">
-          var text_max = 200;
-          $('#count_message').html(text_max + ' remaining');
-
-          $('#text').keyup(function() {
-            var text_length = $('#text').val().length;
-            var text_remaining = text_max - text_length;
-            
-            $('#count_message').html(text_remaining + ' remaining');
-          });
-        </script> -->
-
         <!-- count data input -->
         <script type="text/javascript">
 
           $('#text').keyup(function() {
+            
             var text_input = $('#text').val();
             if (/^[A-Za-z0-9-.]*$/.test(text_input)) {
               $('#count_message').html(text_input);
             } else {
               $('#count_message').after('<span class="error-message"><font color="red"><p align="left">Can not input special character</font></span>');
             }
+
           });
 
-          // $('#text').keyup(function() {
-          //   var text_input = $('#text').val();
-          //   $('#count_message').html(text_input);
-          // });
+        </script>
+
+        <script type="text/JavaScript">  
+          function validate() 
+          {
+          if( document.form1.quali.value == "-1" )
+             {
+               alert( "Please select qualification!" );
+               return false;
+             }
+          }
+
         </script>
 
     </body>

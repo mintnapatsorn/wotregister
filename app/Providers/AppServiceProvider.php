@@ -30,6 +30,18 @@ class AppServiceProvider extends ServiceProvider
         );
     }
 
+    private function bootOpenDistroSocialite()
+    {
+        $socialite = $this->app->make('Laravel\Socialite\Contracts\Factory');
+        $socialite->extend(
+            'opendistro',
+            function ($app) use ($socialite) {
+                $config = $app['config']['services.opendistro'];
+                return $socialite->buildProvider(OpenDistroAuthProvider::class, $config);
+            }
+        );
+    }
+
     /**
      * Bootstrap any application services.
      *
@@ -40,6 +52,8 @@ class AppServiceProvider extends ServiceProvider
         $this->bootMecasSocialite();
 
         $this->bootBoxBoxSocialite();
+
+        $this->bootOpenDistroSocialite();
     }
 
     /**

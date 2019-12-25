@@ -1,4 +1,4 @@
-FROM bitnami/laravel:5.4.30-r0 as builder
+FROM bitnami/laravel:5.7.19 as builder
 USER root
 RUN install_packages  git
 COPY . /app
@@ -7,6 +7,7 @@ RUN chown -R bitnami /app
 USER bitnami
 RUN composer install
 
-FROM bitnami/laravel:5.4.30-r0
+FROM bitnami/laravel:5.7.19
 COPY --from=builder /app /app
+COPY ./app-entrypoint.sh /app-entrypoint.sh
 RUN touch /tmp/initialized.sem
