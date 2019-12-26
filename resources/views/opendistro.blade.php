@@ -25,7 +25,6 @@
           .view {
             height: 100%;
           }
-
           @media (max-width: 740px) {
             html,
             body,
@@ -34,7 +33,6 @@
               height: 1000px;
             }
           }
-
           @media (min-width: 800px) and (max-width: 850px) {
             html,
             body,
@@ -51,19 +49,15 @@
           /* Navbar animation */
           .navbar {
             background-color: rgba(0, 0, 0, 0.3); }
-
           .top-nav-collapse {
             background-color: #1C2331; }
-
           /* Adding color to the Navbar on mobile */
           @media only screen and (max-width: 768px) {
             .navbar {
               background-color: #1C2331; } }
-
           /* Footer color for sake of consistency with Navbar */
           .page-footer {
             background-color: #1C2331; }
-
           /*show hidden text*/
           .field-icon {
             float: right;
@@ -72,7 +66,6 @@
             position: relative;
             z-index: 2;
           }
-
           #MainTable {
               width: 100%;
               background-color: #FFFFFF;
@@ -82,7 +75,6 @@
               opacity: 0.97;
               background: transparent;
           }
-
         </style>
     </head>
 
@@ -162,7 +154,7 @@
                 </li>
 
                 <li class="nav-item active">
-                  <a href="http://portal.meca.in.th" class="nav-link border border-light rounded">
+                  <a href="https://kibana.wot.web.meca.in.th/" class="nav-link border border-light rounded">
                     <img src="opendistro.png" width="20" height="20"> Data storage dashboard
                   </a>
                 </li>
@@ -242,7 +234,6 @@
                               @if($alldtptokens->action==0)
                                 <img src="x.png" width="40" height="40">
                               @endif
-
                               @if($alldtptokens->action==1)
                                 <img src="true.png" width="40" height="40">
                               @endif
@@ -328,14 +319,32 @@
                     </div>
                     
                     <div class="modal-footer">
-                      <button id="{{ Session::get('message') }}" type="submit" class="btn btn-success" onclick="copyText(this.id)">Copy</button>
-                      <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                      <button class="copy btn btn-success" data-clipboard-text="{{ Session::get('message') }}">Copy</button>
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                     </div>
                 </div>
               </div>
             </div>   
           </div> <!--end modal-->
         @endif
+
+
+
+
+
+        <div id="myModalFirst" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-body">
+                <button class="copy btn btn-success" data-clipboard-text="{{ Session::get('message') }}">Copy Text From First Modal</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/clipboard.js/1.6.0/clipboard.min.js"></script>
+
 
 
         <script>
@@ -352,21 +361,22 @@
           } );
         </script>
 
+        <!-- copy text to clipboard -->
+        <script>
+          $(document).ready(function() {
+              var client = new Clipboard( '.copy' );
+              client.on('success', function(e) {
+                  console.log('Copied');
+              });
+              client.on('error', function(e) {
+                  console.log('Error!');
+              });
+          });
+        </script>
+
         <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-
-        <!-- show and hide text in textbox (reclam token) -->
-        <script>
-          function openeye(id) {
-            var x = document.getElementById(id);
-            if (x.type === "password") {
-              x.type = "text";  
-            } else {
-              x.type = "password";
-            }
-          }
-        </script>
 
         <!-- Alert for condition-->
         <script>
@@ -381,7 +391,6 @@
                    $('#myModalToken').modal('show');
                 });
                 // prompt("Token : ","{{ Session::get('message') }}");
-
                   // var copyText = {{ Session::get('message') }};
                   // copyText.select();
                   // document.execCommand("copy");
@@ -406,13 +415,10 @@
           function copyText(idcp) {
             /* Get the text field */
             var copyText = document.getElementById(idcp);
-
             /* Select the text field */
             copyText.select();
-
             /* Copy the text inside the text field */
             document.execCommand("copy");
-
             /* Alert the copied text */
             alert("Data storage token: " + copyText.value);
           }

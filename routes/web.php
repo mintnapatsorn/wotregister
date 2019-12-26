@@ -21,6 +21,10 @@
     Route::get('/teststart',function(){
         return view('getstarted');
     });
+    
+    Route::get('/testgraph',function(){
+        return view('userregisdomaingraph');
+    });
 
     //domainregister
     // Route::get('/userregisdomain', function () {

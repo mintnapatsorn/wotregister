@@ -21,7 +21,6 @@
           .view {
             height: 100%;
           }
-
           @media (max-width: 740px) {
             html,
             body,
@@ -30,7 +29,6 @@
               height: 1000px;
             }
           }
-
           @media (min-width: 800px) and (max-width: 850px) {
             html,
             body,
@@ -47,29 +45,23 @@
           /* Navbar animation */
           .navbar {
             background-color: rgba(0, 0, 0, 0.3); }
-
           .top-nav-collapse {
             background-color: #1C2331; }
-
           /* Adding color to the Navbar on mobile */
           @media only screen and (max-width: 768px) {
             .navbar {
               background-color: #1C2331; } }
-
           /* Footer color for sake of consistency with Navbar */
           .page-footer {
             background-color: #1C2331; }
-
           
           /*piechart (donut) chart*/
           @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
-
           @keyframes bake-pie {
             from {
               transform: rotate(0deg) translate3d(0,0,0);
             }
           }
-
           body {
             font-family: "Open Sans", Arial;
           }
@@ -153,8 +145,6 @@
           .legend span {
             float: right;
           }
-
-
           textarea {
               resize: none;
           }
@@ -239,7 +229,7 @@
                 </li>
 
                 <li class="nav-item active">
-                  <a href="https://portal.meca.in.th" class="nav-link border border-light rounded" target="_blank">
+                  <a href="https://kibana.wot.web.meca.in.th/" class="nav-link border border-light rounded" target="_blank">
                     <img src="opendistro.png" width="20" height="20"> Data storage dashboard
                   </a>
                 </li>
@@ -320,26 +310,16 @@
 
                 <!--Grid column-->
                 <div class="col-md-4 col-xl-5 mb-4 text-black text-center text-md-middle">
-                  <br><br><br><br><br><br>
+                  <br><br><br><br><br>
                   <main>
                     <h2 align="center">Your quota</h2>
                     <p align="center">Also, you can check all your subdomain at <a href="{{ url('/mydomain') }}">My domain</a>.</p>
-                    <section>
-                      <div class="pieID pie">  
-                      </div>
-                        <ul class="pieID legend">
-                          <li>
-                            <em>Quota used</em>
-                            <span>{{$permission_used}}</span>
-                          </li>
-                          <li>
-                            <em>Total quota</em>
-                            <span>{{$allpermission}}</span>
-                          </li>
-                        </ul>
-                    </section>
-                      <!-- <p>Time update at <font color="darkred"><span id="datetime"></span></font></p> -->
-                      <a href="{{ url('/mydomain') }}"><button type="button" class="btn btn-info fas fa-clipboard"> My domain</button></a>
+                    <input type="hidden" id="totalquota" value="{{$allpermission}}"></input>
+                    <input type="hidden" id="quotaused" value="{{$permission_used}}"></input>
+                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                    <br>
+                      <a href="{{ url('/mydomain') }}"><button type="button" class="btn btn-info"><i class="fas fa-clipboard"></i> My domain</button></a>
                   </main>
                 </div>
                 <!--Grid column-->
@@ -353,24 +333,13 @@
         <!-- Full Page Intro -->
 
         <!--Main layout-->
-        <script>
-          new WOW().init();
-        </script>
-
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
-        <script>
-          // Material Select Initialization
-          $(document).ready(function() {
-          $('.mdb-select').materialSelect();
-          });
-        </script>
 
         <!-- alert special char input -->
         <script type="text/javascript">
           // Add error message element after input.
-
           $('#some-number').on('input', function (evt) {
             var value = evt.target.value
             
@@ -378,77 +347,39 @@
               evt.target.className = ''
               return
             }
-
             if (/^[A-Za-z0-9-.]*$/.test(value)) {
               evt.target.className = 'valid'
-
               // show input realtime text
               $('#display').text($(this).val());
-
             } else {
               evt.target.className = 'invalid'
             }
-
           })
         </script>
 
         <!-- pie chart (donut) graph java script -->
-        <script type="text/javascript">
-          function sliceSize(dataNum, dataTotal) {
-            return (dataNum / dataTotal) * 360;
-          }
-          function addSlice(sliceSize, pieElement, offset, sliceID, color) {
-            $(pieElement).append("<div class='slice "+sliceID+"'><span></span></div>");
-            var offset = offset - 1;
-            var sizeRotation = -179 + sliceSize;
-            $("."+sliceID).css({
-              "transform": "rotate("+offset+"deg) translate3d(0,0,0)"
-            });
-            $("."+sliceID+" span").css({
-              "transform"       : "rotate("+sizeRotation+"deg) translate3d(0,0,0)",
-              "background-color": color
-            });
-          }
-          function iterateSlices(sliceSize, pieElement, offset, dataCount, sliceCount, color) {
-            var sliceID = "s"+dataCount+"-"+sliceCount;
-            var maxSize = 179;
-            if(sliceSize<=maxSize) {
-              addSlice(sliceSize, pieElement, offset, sliceID, color);
-            } else {
-              addSlice(maxSize, pieElement, offset, sliceID, color);
-              iterateSlices(sliceSize-maxSize, pieElement, offset+maxSize, dataCount, sliceCount+1, color);
-            }
-          }
-          function createPie(dataElement, pieElement) {
-            var listData = [];
-            $(dataElement+" span").each(function() {
-              listData.push(Number($(this).html()));
-            });
-            var listTotal = 0;
-            for(var i=0; i<listData.length; i++) {
-              listTotal += listData[i];
-            }
-            var offset = 0;
-            var color = [
-              //"olivedrab",
-              "crimson",
-              "gray",
-              "tomato", 
-              "cornflowerblue", 
-              "orange",  
-              "purple", 
-              "turquoise", 
-              "forestgreen", 
-              "navy"
-            ];
-            for(var i=0; i<listData.length; i++) {
-              var size = sliceSize(listData[i], listTotal);
-              iterateSlices(size, pieElement, offset, i, 0, color[i]);
-              $(dataElement+" li:nth-child("+(i+1)+")").css("border-color", color[i]);
-              offset += size;
-            }
-          }
-          createPie(".pieID.legend", ".pieID.pie");
+        <script>
+        window.onload = function () {
+        var totalquota = document.getElementById("totalquota").value;
+        var quotaused = document.getElementById("quotaused").value;
+        var chart = new CanvasJS.Chart("chartContainer", {
+          animationEnabled: true,
+          data: [{
+            type: "doughnut",
+            startAngle: 60,
+            //innerRadius: 60,
+            indexLabelFontSize: 17,
+            indexLabel: "{label}:{y}",
+            toolTipContent: "<b>{label}:</b> {y}",
+            dataPoints: [
+              { y: totalquota, label: "Total quota", color:"gray"},
+              { y: quotaused, label: "Quota used", color:"darkred"}
+            ]
+          }]
+        });
+        chart.render();
+
+        }
         </script>
 
         <script type="text/javascript">
@@ -469,23 +400,15 @@
             });
             }, false);
             })();
-
             $(document).ready(function() {
-            $('.mdb-select').materialSelect();
+            // $('.mdb-select').materialSelect();
             $('.mdb-select.select-wrapper .select-dropdown').val("").removeAttr('readonly').attr("placeholder",
             "Choose your country ").prop('required', true).addClass('form-control').css('background-color', '#fff');
           });
         </script>
 
-        <!-- show current date time -->
-        <script>
-          var dt = new Date();
-          document.getElementById("datetime").innerHTML = dt.toLocaleString();
-        </script>
-
         <!-- count data input -->
         <script type="text/javascript">
-
           $('#text').keyup(function() {
             
             var text_input = $('#text').val();
@@ -494,9 +417,7 @@
             } else {
               $('#count_message').after('<span class="error-message"><font color="red"><p align="left">Can not input special character</font></span>');
             }
-
           });
-
         </script>
 
         <script type="text/JavaScript">  
@@ -508,7 +429,6 @@
                return false;
              }
           }
-
         </script>
 
     </body>

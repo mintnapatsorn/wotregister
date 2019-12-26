@@ -12,6 +12,10 @@
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
 
+
+
+        
+
         <title>REQUEST QUOTA</title>
 
         <!-- Styles -->
@@ -235,7 +239,7 @@
                 </li>
 
                 <li class="nav-item active">
-                  <a href="https://portal.meca.in.th" class="nav-link border border-light rounded" target="_blank">
+                  <a href="https://kibana.wot.web.meca.in.th/" class="nav-link border border-light rounded" target="_blank">
                     <img src="opendistro.png" width="20" height="20"> Data storage dashboard
                   </a>
                 </li>
@@ -318,24 +322,15 @@
                   <main>
                     <h2 align="center">Your quota</h2>
                     <p align="center">Also, you can check all your subdomain at <a href="{{ url('/mydomain') }}">"My domain"</a>.</p>
-                    <section>
-                      <div class="pieID pie">  
-                      </div>
-                        <ul class="pieID legend">
-                          <li>
-                            <em>Quota used</em>
-                            <span>{{$permission_used}}</span>
-                          </li>
-                          <li>
-                            <em>Total quota</em>
-                            <span>{{$allpermission}}</span>
-                          </li>
-                        </ul>
-                    </section>
+                    <input type="hidden" id="totalquota" value="{{$allpermission}}"></input>
+                    <input type="hidden" id="quotaused" value="{{$permission_used}}"></input>
+                    <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+                    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                    <br>
                     <!-- <p align="center">Time update at 10 September 2019 12.23pm.</p> -->
                       <!-- <p>Time update at <font color="darkred"><span id="datetime"></span></font></p> -->
-                    <button type="button" class="btn btn-warning fas fa-cloud-upload-alt" data-toggle="modal" data-target="#myModal"> Request quota</button>
-                    <a href="{{ url('/mydomain') }}"><button type="button" class="btn btn-info fas fa-clipboard"> My domain</button></a>
+                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myModal"><i class="fas fa-cloud-upload-alt"></i> Request quota</button>
+                    <a href="{{ url('/mydomain') }}"><button type="button" class="btn btn-info"><i class="fas fa-clipboard"></i> My domain</button></a>
 
                   </main>
                 </div>
@@ -386,109 +381,32 @@
         <!-- Full Page Intro -->
 
         <!--Main layout-->
-        <script>
-          new WOW().init();
-        </script>
-
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 
-        <script>
-          // Material Select Initialization
-          $(document).ready(function() {
-          $('.mdb-select').materialSelect();
-          });
-        </script>
-
         <!-- pie chart (donut) graph java script -->
-        <script type="text/javascript">
-          function sliceSize(dataNum, dataTotal) {
-            return (dataNum / dataTotal) * 360;
-          }
-          function addSlice(sliceSize, pieElement, offset, sliceID, color) {
-            $(pieElement).append("<div class='slice "+sliceID+"'><span></span></div>");
-            var offset = offset - 1;
-            var sizeRotation = -179 + sliceSize;
-            $("."+sliceID).css({
-              "transform": "rotate("+offset+"deg) translate3d(0,0,0)"
-            });
-            $("."+sliceID+" span").css({
-              "transform"       : "rotate("+sizeRotation+"deg) translate3d(0,0,0)",
-              "background-color": color
-            });
-          }
-          function iterateSlices(sliceSize, pieElement, offset, dataCount, sliceCount, color) {
-            var sliceID = "s"+dataCount+"-"+sliceCount;
-            var maxSize = 179;
-            if(sliceSize<=maxSize) {
-              addSlice(sliceSize, pieElement, offset, sliceID, color);
-            } else {
-              addSlice(maxSize, pieElement, offset, sliceID, color);
-              iterateSlices(sliceSize-maxSize, pieElement, offset+maxSize, dataCount, sliceCount+1, color);
-            }
-          }
-          function createPie(dataElement, pieElement) {
-            var listData = [];
-            $(dataElement+" span").each(function() {
-              listData.push(Number($(this).html()));
-            });
-            var listTotal = 0;
-            for(var i=0; i<listData.length; i++) {
-              listTotal += listData[i];
-            }
-            var offset = 0;
-            var color = [
-              //"olivedrab",
-              "crimson",
-              "gray",
-              "tomato", 
-              "cornflowerblue", 
-              "orange",  
-              "purple", 
-              "turquoise", 
-              "forestgreen", 
-              "navy"
-            ];
-            for(var i=0; i<listData.length; i++) {
-              var size = sliceSize(listData[i], listTotal);
-              iterateSlices(size, pieElement, offset, i, 0, color[i]);
-              $(dataElement+" li:nth-child("+(i+1)+")").css("border-color", color[i]);
-              offset += size;
-            }
-          }
-          createPie(".pieID.legend", ".pieID.pie");
-        </script>
-
-        <script type="text/javascript">
-          (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-            }, false);
-            });
-            }, false);
-            })();
-
-            $(document).ready(function() {
-            $('.mdb-select').materialSelect();
-            $('.mdb-select.select-wrapper .select-dropdown').val("").removeAttr('readonly').attr("placeholder",
-            "Choose your country ").prop('required', true).addClass('form-control').css('background-color', '#fff');
-          });
-        </script>
-
-        <!-- show current date time -->
         <script>
-          var dt = new Date();
-          document.getElementById("datetime").innerHTML = dt.toLocaleString();
+        window.onload = function () {
+        var totalquota = document.getElementById("totalquota").value;
+        var quotaused = document.getElementById("quotaused").value;
+        var chart = new CanvasJS.Chart("chartContainer", {
+          animationEnabled: true,
+          data: [{
+            type: "doughnut",
+            startAngle: 60,
+            //innerRadius: 60,
+            indexLabelFontSize: 17,
+            indexLabel: "{label}:{y}",
+            toolTipContent: "<b>{label}:</b> {y}",
+            dataPoints: [
+              { y: totalquota, label: "Total quota", color:"gray"},
+              { y: quotaused, label: "Quota used", color:"darkred"}
+            ]
+          }]
+        });
+        chart.render();
+
+        }
         </script>
 
         <!-- data table -->

@@ -164,7 +164,7 @@
                 </li>
 
                 <li class="nav-item active" target="_blank">
-                  <a href="https://portal.meca.in.th" class="nav-link border border-light rounded">
+                  <a href="https://kibana.wot.web.meca.in.th/" class="nav-link border border-light rounded">
                     <img src="opendistro.png" width="20" height="20"> Data storage dashboard
                   </a>
                 </li>
