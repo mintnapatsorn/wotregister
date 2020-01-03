@@ -16,7 +16,7 @@
     //getstarted page
     Route::get('/getstarted', function () {
         return view('gettingstartedtest');
-    })->middleware('checkboxboxlogin');
+    })->middleware('checkopendistrologin');
 
     Route::get('/teststart',function(){
         return view('getstarted');
@@ -39,18 +39,18 @@
     //regis domain success
     Route::get('/regissuccess',function(){
     	return view('regisdomainsuccess');
-    })->middleware('checkboxboxlogin');
+    })->middleware('checkopendistrologin');
 
     //controller for get data from form to keep data to database for request permission
-    Route::post('/keepuserpermissionrequest','Auth\keepuserpermissionrequestController@requestkeep')->name('keepuserpermissionrequest')->middleware('checkboxboxlogin');
+    Route::post('/keepuserpermissionrequest','Auth\keepuserpermissionrequestController@requestkeep')->name('keepuserpermissionrequest')->middleware('checkopendistrologin');
 
     //show request permission successful
-    Route::get('/requestpermissionsuccessful','Auth\keepuserpermissionrequestController@requestsuccess')->middleware('checkboxboxlogin');
+    Route::get('/requestpermissionsuccessful','Auth\keepuserpermissionrequestController@requestsuccess')->middleware('checkopendistrologin');
 
     //news
     Route::get('/news', function () {
         return view('news');
-    })->middleware('checkboxboxlogin');
+    })->middleware('checkopendistrologin');
 
     Route::get('/alertlogin',function(){
         return view('alertlogin');
@@ -102,14 +102,14 @@
     Route::get('/updatereclamtokentest','Auth\BoxBoxAuthController@renewreclamtest')->name('updatereclamtokentest');
 
 
-    Route::get('/mydomain','Auth\BoxBoxAuthController@mydomain')->middleware('checkboxboxlogin');
+    Route::get('/mydomain','Auth\BoxBoxAuthController@mydomain')->middleware('checkopendistrologin','cors');
 
     //test ajax
     Route::get('/testajax',function(){
         return view('testajax');
     });
 
-    Route::get('/requestpermission','Auth\keepuserpermissionrequestController@showrequestpermissionpage')->middleware('checkboxboxlogin');
+    Route::get('/requestpermission','Auth\keepuserpermissionrequestController@showrequestpermissionpage')->middleware('checkopendistrologin');
 
     // open distro generate token
     Route::get('/opendistro','Auth\OpenDistroAuthController@dataplatformtoken')->middleware('checkopendistrologin');
@@ -126,7 +126,7 @@
 //Admin Part
     Route::get('/adminmanagement',function(){
     	return view('adminhome');
-    })->middleware('checkboxboxlogin');
+    })->middleware('checkopendistrologin');
 
     // Route::get('/domainmanagement',function(){
     // 	return view('adminmanagedomain');

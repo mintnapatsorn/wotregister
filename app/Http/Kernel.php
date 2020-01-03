@@ -69,5 +69,8 @@ class Kernel extends HttpKernel
         'checkboxboxlogin' => \App\Http\Middleware\checkboxboxlogin::class,
 
         'checkopendistrologin' => \App\Http\Middleware\checkopendistrologin::class,
+
+
+        'cors' => \App\Http\Middleware\Cors::class, //enable cors https request
     ];
 }

@@ -353,14 +353,6 @@
 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js"></script>
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-
-        <!-- data table -->
-        <script type="text/javascript">
-          $(document).ready(function() {
-              $('#example').DataTable();
-          } );
-        </script>
-
         <!-- copy text to clipboard -->
         <script>
           $(document).ready(function() {
@@ -372,6 +364,13 @@
                   console.log('Error!');
               });
           });
+        </script>
+
+        <!-- data table -->
+        <script type="text/javascript">
+          $(document).ready(function() {
+              $('#example').DataTable();
+          } );
         </script>
 
         <!-- <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script> -->

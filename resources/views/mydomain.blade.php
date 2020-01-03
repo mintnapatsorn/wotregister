@@ -317,9 +317,9 @@
         <!-- Full Page Intro -->
 
         <!--Main layout-->
-        <script>
+        <!-- <script>
           new WOW().init();
-        </script>
+        </script> -->
 
         <script type="text/javascript" src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
 

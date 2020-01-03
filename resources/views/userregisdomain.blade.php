@@ -55,99 +55,9 @@
           .page-footer {
             background-color: #1C2331; }
           
-          /*piechart (donut) chart*/
-          @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700);
-          @keyframes bake-pie {
-            from {
-              transform: rotate(0deg) translate3d(0,0,0);
-            }
-          }
-          body {
-            font-family: "Open Sans", Arial;
-          }
-          main {
-            width: 400px;
-            margin: 30px auto;
-          }
-          section {
-            margin-top: 30px;
-          }
-          .pieID {
-            display: inline-block;
-            vertical-align: top;
-          }
-          .pie {
-            height: 200px;
-            width: 200px;
-            position: relative;
-            margin: 0 30px 30px 0;
-          }
-          .pie::before {
-            content: "";
-            display: block;
-            position: absolute;
-            z-index: 1;
-            width: 100px;
-            height: 100px;
-            background: #EEE;
-            border-radius: 50%;
-            top: 50px;
-            left: 50px;
-          }
-          .pie::after {
-            content: "";
-            display: block;
-            width: 120px;
-            height: 2px;
-            background: rgba(0,0,0,0.1);
-            border-radius: 50%;
-            box-shadow: 0 0 3px 4px rgba(0,0,0,0.1);
-            margin: 220px auto;      
-          }
-          .slice {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            clip: rect(0px, 200px, 200px, 100px);
-            animation: bake-pie 1s;
-          }
-          .slice span {
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            background-color: black;
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            clip: rect(0px, 200px, 200px, 100px);
-          }
-          .legend {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-            background: #FFF;
-            padding: 15px;
-            font-size: 13px;
-            box-shadow: 1px 1px 0 #DDD,
-                        2px 2px 0 #BBB;
-          }
-          .legend li {
-            width: 110px;
-            height: 1.25em;
-            margin-bottom: 0.7em;
-            padding-left: 0.5em;
-            border-left: 1.25em solid black;
-          }
-          .legend em {
-            font-style: normal;
-          }
-          .legend span {
-            float: right;
-          }
-          textarea {
-              resize: none;
-          }
+
+          
+
         </style>
     </head>
     <body>
@@ -310,7 +220,7 @@
 
                 <!--Grid column-->
                 <div class="col-md-4 col-xl-5 mb-4 text-black text-center text-md-middle">
-                  <br><br><br><br><br>
+                  <br><br><br><br><br><br>
                   <main>
                     <h2 align="center">Your quota</h2>
                     <p align="center">Also, you can check all your subdomain at <a href="{{ url('/mydomain') }}">My domain</a>.</p>
@@ -318,8 +228,9 @@
                     <input type="hidden" id="quotaused" value="{{$permission_used}}"></input>
                     <div id="chartContainer" style="height: 300px; width: 100%;"></div>
                     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+                    
                     <br>
-                      <a href="{{ url('/mydomain') }}"><button type="button" class="btn btn-info"><i class="fas fa-clipboard"></i> My domain</button></a>
+                    <a href="{{ url('/mydomain') }}"><button type="button" class="btn btn-info"><i class="fas fa-clipboard"></i> My domain</button></a>
                   </main>
                 </div>
                 <!--Grid column-->
@@ -358,54 +269,30 @@
         </script>
 
         <!-- pie chart (donut) graph java script -->
-        <script>
-        window.onload = function () {
-        var totalquota = document.getElementById("totalquota").value;
-        var quotaused = document.getElementById("quotaused").value;
-        var chart = new CanvasJS.Chart("chartContainer", {
-          animationEnabled: true,
-          data: [{
-            type: "doughnut",
-            startAngle: 60,
-            //innerRadius: 60,
-            indexLabelFontSize: 17,
-            indexLabel: "{label}:{y}",
-            toolTipContent: "<b>{label}:</b> {y}",
-            dataPoints: [
-              { y: totalquota, label: "Total quota", color:"gray"},
-              { y: quotaused, label: "Quota used", color:"darkred"}
-            ]
-          }]
-        });
-        chart.render();
-
-        }
-        </script>
-
         <script type="text/javascript">
-          (function() {
-            'use strict';
-            window.addEventListener('load', function() {
-            // Fetch all the forms we want to apply custom Bootstrap validation styles to
-            var forms = document.getElementsByClassName('needs-validation');
-            // Loop over them and prevent submission
-            var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-            if (form.checkValidity() === false) {
-              event.preventDefault();
-              event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-            }, false);
-            });
-            }, false);
-            })();
-            $(document).ready(function() {
-            // $('.mdb-select').materialSelect();
-            $('.mdb-select.select-wrapper .select-dropdown').val("").removeAttr('readonly').attr("placeholder",
-            "Choose your country ").prop('required', true).addClass('form-control').css('background-color', '#fff');
+          window.onload = function () {
+          var totalquota = document.getElementById("totalquota").value;
+          var quotaused = document.getElementById("quotaused").value;
+          var chart = new CanvasJS.Chart("chartContainer", {
+            animationEnabled: true,
+            data: [{
+              type: "doughnut",
+              startAngle: 60,
+              // innerRadius: 60,
+              indexLabelFontSize: 17,
+              indexLabel: "{label}:{y}",
+              toolTipContent: "<b>{label}:</b> {y}",
+              dataPoints: [
+                { y: totalquota, label: "Total quota", color:"gray"},
+                { y: quotaused, label: "Quota used", color:"darkred"}
+              ]
+            }]
           });
+          chart.render();
+
+          }
         </script>
+
 
         <!-- count data input -->
         <script type="text/javascript">

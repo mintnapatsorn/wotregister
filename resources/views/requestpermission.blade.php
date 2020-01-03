@@ -318,7 +318,7 @@
 
                 <!--Grid column-->
                 <div class="col-md-4 col-xl-5 mb-4 text-black text-center text-md-middle">
-                  <br><br><br><br><br><br>
+                  <br><br><br><br><br>
                   <main>
                     <h2 align="center">Your quota</h2>
                     <p align="center">Also, you can check all your subdomain at <a href="{{ url('/mydomain') }}">"My domain"</a>.</p>
