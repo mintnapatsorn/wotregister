@@ -38,7 +38,7 @@ class BoxBoxAuthController extends Controller
         session(['token' => $user->token]);
         session(['email'=>$user->email]);
         session(['preferred_username'=>$user->preferred_username]);
-        session(['groups'=>$user->groups]);
+        session(['roles'=>$user->roles]);
 
 
         //Send Email to User for logged in to WoT System 
@@ -53,7 +53,7 @@ class BoxBoxAuthController extends Controller
             return redirect('login/getfirstpermission');
         }
 
-        $usergetstatus = $user->groups;
+        $usergetstatus = $user->roles;
 
         //login 3 status
         foreach ($usergetstatus as $usergetstatus) {

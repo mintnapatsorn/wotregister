@@ -80,14 +80,16 @@ class OpenDistroAuthProvider extends AbstractProvider implements ProviderInterfa
                 'id'=>$user['sub'],
                 'preferred_username'=>$user['preferred_username'],
                 'email'=>$user['email'],
-                'groups'=>$user['groups']
+                'roles'=>$user['roles']
+                // 'groups'=>$user['groups']
             ]);
         }else{
             return (new User)->setRaw($user)->map([
                 'id'=>$user['sub'],
                 'preferred_username'=>$user['preferred_username'],
                 'email'=>'default@meca.in.th',
-                'groups'=>$user['groups']
+                'roles'=>$user['roles']
+                // 'groups'=>$user['groups']
             ]);
         }
 

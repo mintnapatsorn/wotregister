@@ -101,8 +101,8 @@
                     <i class="fas fa-user mr-2"></i><?php echo session('preferred_username'); ?>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    @foreach(Session::get('groups') as $groups)
-                      @if($groups ==env('NAME_SPACE'))
+                    @foreach(Session::get('roles') as $roles)
+                      @if($roles ==env('NAME_SPACE'))
                         <a class="dropdown-item" href="{{ url('/') }}">Domain register</a>
                       @endif
                     @endforeach

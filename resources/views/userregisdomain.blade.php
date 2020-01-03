@@ -55,9 +55,7 @@
           .page-footer {
             background-color: #1C2331; }
           
-
           
-
         </style>
     </head>
     <body>
@@ -117,8 +115,8 @@
                     <i class="fas fa-user mr-2"></i><?php echo session('preferred_username'); ?>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    @foreach(Session::get('groups') as $groups)
-                      @if($groups ==env('NAME_SPACE'))
+                    @foreach(Session::get('roles') as $roles)
+                      @if($roles ==env('NAME_SPACE'))
                         <a class="dropdown-item" href="{{ url('/adminmanagement') }}">Manage system data</a>
                       @endif
                     @endforeach
@@ -196,7 +194,7 @@
 
                             <div class="col-md-6 mb-3">
                               <label for="validationServer033">Relay server</label>
-                              <select class="form-control" name="serverlistbox" required="">   
+                              <select class="form-control" name="serverlistbox" required>   
                                 <option value="" required>-- please select relay server --</option>
                                 @foreach($interserverlist as $interserverlists)
                                   <option value="{{$interserverlists->relayserver_code}}" required>{{$interserverlists->relayserver_code}} ({{$interserverlists->description}})</option>
@@ -207,10 +205,12 @@
 
                           <br>
                           <div class="text-center">
-                            <button type="submit" class="btn btn-warning fas fa-paper-plane"> Submit</button>
+                            <button class="btn btn-warning"><i class="fas fa-paper-plane"></i> Submit</button>
                             <hr>
                           </div>
                       </form>
+
+
                       <!-- Form -->
                     </div>
                   </div>
@@ -289,7 +289,6 @@
             }]
           });
           chart.render();
-
           }
         </script>
 
@@ -307,7 +306,7 @@
           });
         </script>
 
-        <script type="text/JavaScript">  
+        <!-- <script type="text/JavaScript">  
           function validate() 
           {
           if( document.form1.quali.value == "-1" )
@@ -316,6 +315,26 @@
                return false;
              }
           }
+        </script> -->
+
+        <script>
+          (function() {
+            'use strict';
+            window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+            }, false);
+            });
+            }, false);
+            })();
         </script>
 
     </body>

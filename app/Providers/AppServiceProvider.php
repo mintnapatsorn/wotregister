@@ -57,7 +57,9 @@ class AppServiceProvider extends ServiceProvider
 
         $this->bootOpenDistroSocialite();
 
-        URL::forceScheme('https');
+        // URL::forceScheme('https');
+        // URL::forceScheme('http');
+
     }
 
     /**

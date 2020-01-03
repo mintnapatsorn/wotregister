@@ -18,7 +18,6 @@
           .view {
             height: 100%;
           }
-
           @media (max-width: 740px) {
             html,
             body,
@@ -27,7 +26,6 @@
               height: 1000px;
             }
           }
-
           @media (min-width: 800px) and (max-width: 850px) {
             html,
             body,
@@ -44,15 +42,12 @@
           /* Navbar animation */
           .navbar {
             background-color: rgba(0, 0, 0, 0.3); }
-
           .top-nav-collapse {
             background-color: #1C2331; }
-
           /* Adding color to the Navbar on mobile */
           @media only screen and (max-width: 768px) {
             .navbar {
               background-color: #1C2331; } }
-
           /* Footer color for sake of consistency with Navbar */
           .page-footer {
             background-color: #1C2331; }
@@ -115,8 +110,8 @@
                     <i class="fas fa-user mr-2"></i><?php echo session('preferred_username'); ?>
                   </a>
                   <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    @foreach(Session::get('groups') as $groups)
-                      @if($groups ==env('NAME_SPACE'))
+                    @foreach(Session::get('roles') as $roles)
+                      @if($roles ==env('NAME_SPACE'))
                         <a class="dropdown-item" href="{{ url('/adminmanagement') }}">Manage system data</a>
                       @endif
                     @endforeach
